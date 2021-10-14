@@ -52,6 +52,6 @@ categorical_features:
   - title
 
 # Features to extract first letter
-extrac_letter_features:
+extract_letter_features:
   - 'cabin'
 

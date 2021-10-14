@@ -1,6 +1,5 @@
 import typing as t
 
-import numpy as np
 import pandas as pd
 
 from clf_model import __version__ as _version
@@ -20,8 +19,12 @@ def make_prediction(
 
     data = pd.DataFrame(input_data)
     validated_data, errors = validate_inputs(input_data=data)
-    results = {"predictions_class": None, "predictions_proba": None,
-      "version": _version, "errors": errors}
+    results = {
+        "predictions_class": None,
+        "predictions_proba": None,
+        "version": _version,
+        "errors": errors,
+    }
 
     if not errors:
         predictions_class = _titanic_pipe.predict(
@@ -29,11 +32,11 @@ def make_prediction(
         )
         predictions_proba = _titanic_pipe.predict_proba(
             X=validated_data[config.model_config.features]
-        )[:,-1]
+        )[:, -1]
 
         results = {
-            "predictions_class": predictions_class,
-            "predictions_proba": predictions_proba,
+            "predictions_class": [pred for pred in predictions_class],  # type: ignore
+            "predictions_proba": [pred for pred in predictions_proba],  # type: ignore
             "version": _version,
             "errors": errors,
         }

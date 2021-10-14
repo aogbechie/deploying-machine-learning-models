@@ -4,11 +4,12 @@ import numpy as np
 
 from clf_model.predict import make_prediction
 
+
 def test_make_prediction(sample_input_data):
     # Given
     expected_first_prediction_value = 0
-    expected_first_prediction_proba = 0.33781886
-    expected_no_predictions = 179
+    expected_first_prediction_proba = 0.33527866
+    expected_no_predictions = 418
 
     # When
     result = make_prediction(input_data=sample_input_data)
@@ -22,6 +23,9 @@ def test_make_prediction(sample_input_data):
     assert isinstance(predictions_proba[0], np.float64)
     assert result.get("errors") is None
     assert len(predictions_class) == expected_no_predictions
-    assert math.isclose(predictions_class[0], expected_first_prediction_value, abs_tol=0)
-    assert math.isclose(predictions_proba[0], expected_first_prediction_proba, abs_tol=0.01)
-
+    assert math.isclose(
+        predictions_class[0], expected_first_prediction_value, abs_tol=0
+    )
+    assert math.isclose(
+        predictions_proba[0], expected_first_prediction_proba, abs_tol=0.005
+    )

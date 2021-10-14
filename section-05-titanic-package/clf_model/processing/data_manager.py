@@ -10,42 +10,49 @@ from sklearn.pipeline import Pipeline
 from clf_model import __version__ as _version
 from clf_model.config.core import DATASET_DIR, TRAINED_MODEL_DIR, config
 
+
 def load_dataset(*, file_name: str) -> pd.DataFrame:
     dataframe = pd.read_csv(Path(f"{DATASET_DIR}/{file_name}"))
-    dataframe['fare'] = dataframe['fare'].astype('float')
-    dataframe['age'] = dataframe['age'].astype('float')
 
     # rename variables for being always lowercase
     dataframe.columns = [var.lower() for var in dataframe.columns]
 
-    # replace interrogation marks by NaN values
-    dataframe = dataframe.replace('?', np.nan)
+    # cast to float numerical variables
+    dataframe["fare"] = dataframe["fare"].astype("float")
+    dataframe["age"] = dataframe["age"].astype("float")
 
-    # retain only the first cabin if more 
+    # replace interrogation marks by NaN values
+    dataframe = dataframe.replace("?", np.nan)
+
+    # retain only the first cabin if more
     # than 1 are available per passenger
 
     def get_first_cabin(row):
         try:
             return row.split()[0]
-        except:
+        except AttributeError:
             return np.nan
-    dataframe['cabin'] = dataframe['cabin'].apply(get_first_cabin)
+
+    dataframe["cabin"] = dataframe["cabin"].apply(get_first_cabin)
 
     # extracts the title (Mr, Ms, etc) from the name variable
     def get_title(passenger):
         line = passenger
-        if re.search('Mrs', line):
-            return 'Mrs'
-        elif re.search('Mr', line):
-            return 'Mr'
-        elif re.search('Miss', line):
-            return 'Miss'
-        elif re.search('Master', line):
-            return 'Master'
+        if re.search("Mrs", line):
+            return "Mrs"
+        elif re.search("Mr", line):
+            return "Mr"
+        elif re.search("Miss", line):
+            return "Miss"
+        elif re.search("Master", line):
+            return "Master"
         else:
-            return 'Other'
-        
-    dataframe['title'] = dataframe['name'].apply(get_title)
+            return "Other"
+
+    dataframe["title"] = dataframe["name"].apply(get_title)
+
+    return dataframe
+
 
 def save_pipeline(*, pipeline_to_persist: Pipeline) -> None:
     """Persist the pipeline.

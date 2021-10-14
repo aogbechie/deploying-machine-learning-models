@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import List
 
 from pydantic import BaseModel
 from strictyaml import YAML, load
@@ -13,6 +13,7 @@ CONFIG_FILE_PATH = PACKAGE_ROOT / "config.yml"
 DATASET_DIR = PACKAGE_ROOT / "datasets"
 TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_models"
 
+
 class AppConfig(BaseModel):
     """
     Application-level config.
@@ -22,6 +23,7 @@ class AppConfig(BaseModel):
     training_data_file: str
     test_data_file: str
     pipeline_save_file: str
+
 
 class ModelConfig(BaseModel):
     """
@@ -38,6 +40,7 @@ class ModelConfig(BaseModel):
     numerical_features: List[str]
     categorical_features: List[str]
     extract_letter_features: List[str]
+
 
 class Config(BaseModel):
     """Master config object."""

@@ -3,16 +3,16 @@ from typing import List
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
 
-class ExtractLetterTransformer(BaseEstimator,TransformerMixin):
-    '''Extract first letter of variable.'''
+
+class ExtractLetterTransformer(BaseEstimator, TransformerMixin):
+    """Extract first letter of variable."""
 
     def __init__(self, variables: List[str]):
 
         if not isinstance(variables, list):
-            raise ValueError('variables should be a list')
+            raise ValueError("variables should be a list")
 
         self.variables = variables
-
 
     def fit(self, X: pd.DataFrame, y: pd.Series = None):
         # we need this step to fit the sklearn pipeline
@@ -24,5 +24,5 @@ class ExtractLetterTransformer(BaseEstimator,TransformerMixin):
 
         for var in self.variables:
             X[var] = X[var].apply(lambda x: x if pd.isna(x) else x[0])
-            
+
         return X

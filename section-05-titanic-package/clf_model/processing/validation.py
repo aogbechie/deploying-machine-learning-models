@@ -6,13 +6,14 @@ from pydantic import BaseModel, ValidationError
 
 from clf_model.config.core import config
 
+
 def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional[dict]]:
     """Check model inputs for unprocessable values."""
 
     # convert syntax error field names (beginning with numbers)
     # input_data.rename(columns=config.model_config.variables_to_rename, inplace=True)
     input_data["fare"] = input_data["fare"].astype("float")
-    input_data["age"] = input_data["age"].astype("float")    
+    input_data["age"] = input_data["age"].astype("float")
     relevant_data = input_data[config.model_config.features].copy()
     validated_data = relevant_data
     errors = None
