@@ -1,0 +1,19 @@
+include *.txt
+include *.md
+include *.pkl
+recursive-include ./clf_model/*
+
+include clf_model/datasets/train_titanic.csv
+include clf_model/datasets/test_titanic.csv
+include clf_model/trained_models/*.pkl
+include clf_model/VERSION
+include clf_model/config.yml
+
+include ./requirements/requirements.txt
+include ./requirements/test_requirements.txt
+exclude *.log
+exclude *.cfg
+exclude *.ipynb
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]

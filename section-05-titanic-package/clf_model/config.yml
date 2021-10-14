@@ -1,0 +1,57 @@
+# Package Overview
+package_name: clf_model
+
+# Data Files
+training_data_file: train_titanic.csv
+test_data_file: test_titanic.csv
+
+# Variables
+# The variable we are attempting to predict (if a passenger survived)
+target: survived
+
+pipeline_name: clf_model
+pipeline_save_file: clf_model_output_v
+
+features:
+  - pclass
+  - sex
+  - age
+  - sibsp
+  - parch
+  - fare
+  - cabin
+  - embarked
+  - title
+
+# set train/test split
+test_size: 0.2
+
+# to set the random seed
+random_state: 0
+
+#C parameter of the logistic regression
+C: 0.0005
+
+#tolerance of the rare label encoder
+
+tol: 0.05
+
+#Numerical features
+numerical_features:
+  - pclass
+  - age
+  - sibsp
+  - parch
+  - fare
+
+#Categorical features
+categorical_features:
+  - sex
+  - cabin
+  - embarked
+  - title
+
+# Features to extract first letter
+extrac_letter_features:
+  - 'cabin'
+
